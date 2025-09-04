@@ -1,0 +1,16 @@
+
+
+# Node
+node_modules/
+
+
+# Build
+dist/
+build/
+out/
+coverage/
+
+# Env
+.env
+.env.local
+.env.*.local
