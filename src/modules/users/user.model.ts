@@ -6,6 +6,7 @@ const userSchema = new Schema({
   name: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
+  identificationNumber: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   roles: [{ type: Schema.Types.ObjectId, ref: "Roles" }],
   isActive: { type: Boolean, default: true },

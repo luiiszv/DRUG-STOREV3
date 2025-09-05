@@ -5,14 +5,14 @@ export class ApiResponse<T> {
   data?: T;
   details?: any;
 
-  constructor(success: boolean, message: string, data?: T, details?: any) {
+  constructor(success: boolean, message: string, data: T, details?: any) {
     this.success = success;
     this.message = message;
     this.data = data;
     this.details = details;
   }
 
-  static success<T>(message: string, data?: T) {
+  static success<T>(message: string, data: T) {
     return new ApiResponse<T>(true, message, data);
   }
 

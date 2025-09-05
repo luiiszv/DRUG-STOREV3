@@ -9,4 +9,4 @@ const moduleSchema = new Schema({
 }, { timestamps: true });
 
 export type IModule = InferSchemaType<typeof moduleSchema>;
-export const ModuleModel = model<IModule>("Module", moduleSchema);
+export const ModuleModel = model<IModule>("Modules", moduleSchema);
