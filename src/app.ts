@@ -1,24 +1,35 @@
 import express, { Application, Request, Response } from 'express';
 import { errorHandler } from "./core/errors/errorHandler";
 import { PORT } from "./config/env";
+import { swaggerUi, swaggerSpec } from "./config/swagger";
 
-//----
+
+//routas
+import userRoutes from "./modules/users/user.routes"; // Importa las rutas de usuario
+import authRoutes from "./modules/auth/auth.routes";
+
 
 const app: Application = express();
-
 
 import morgan from 'morgan';
 app.use(morgan('dev'));
 
+app.use(express.json()); // Para recibir JSON en las peticiones
 
 
+// Documentación Swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+// Rutas de usuarios
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
+
+// Ruta por defecto para endpoints no encontrados
 app.use((_req: Request, _res: Response) => {
-    _res.status(200).json({ message: "Endpoint  found" })
-})
-
+    _res.status(404).json({ message: "Endpoint not found" });
+});
 
 app.use(errorHandler);
-app.set('port', PORT || 3000);
+app.set('port', PORT || 4000);
 
 export default app;

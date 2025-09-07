@@ -14,4 +14,4 @@ const userSchema = new Schema({
 
 export type IUser = InferSchemaType<typeof userSchema>; // Interface IUser
 
-export const UserModel = model<IUser>("User", userSchema);
+export const UserModel = model<IUser>("Users", userSchema);

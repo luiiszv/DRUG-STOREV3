@@ -15,12 +15,23 @@ export class UserRepository {
         return UserModel.findById(id);
     }
 
-    async count() {
-        return UserModel.countDocuments();
+    async findByEmail(email: string) {
+        return UserModel.findOne({ email });
     }
 
     async findAll() {
         return UserModel.find();
     }
-    
-} 
+
+    async count() {
+        return UserModel.countDocuments();
+    }
+
+    async updateById(id: string, updateData: Partial<CreateUserDto>) {
+        return UserModel.findByIdAndUpdate(id, updateData, { new: true });
+    }
+
+    async deleteById(id: string) {
+        return UserModel.findByIdAndDelete(id);
+    }
+}

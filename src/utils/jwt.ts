@@ -5,7 +5,7 @@ import { SECRET_KEY, EXPIRES_IN } from "../config/env";
 export interface TokenPayload {
     id: string;
     email: string;
-    role: string;
+    roles: string[];
 }
 
 

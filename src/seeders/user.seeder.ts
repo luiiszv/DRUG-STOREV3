@@ -1,7 +1,6 @@
 import { UserRepository } from "../modules/users/user.repository";
 import { CreateUserDto } from "../modules/users/dto/create-user.dto";
-
-
+import { hashPassword } from "../utils/bcrypt.util";
 
 export const seedUsers = async () => {
     const userRepository = new UserRepository();
@@ -12,10 +11,9 @@ export const seedUsers = async () => {
         return;
     }
 
-    const users: CreateUserDto[] = [
+    const users: Omit<CreateUserDto, "password">[] = [
         {
             email: "admin@gmail.com",
-            password: "luis123",
             name: "Admin",
             lastName: "Martinez",
             identificationNumber: "1002953841",
@@ -23,7 +21,6 @@ export const seedUsers = async () => {
         },
         {
             email: "cajero@example.com",
-            password: "luis123",
             name: "cajero",
             lastName: "cajero",
             identificationNumber: "1002953842",
@@ -32,8 +29,9 @@ export const seedUsers = async () => {
     ];
 
     for (const user of users) {
-        await userRepository.create(user);
+        const password = await hashPassword("luis123");
+        await userRepository.create({ ...user, password });
     }
 
-    console.log("✅ Usuarios sembrados con éxito usando Repository");
+    console.log("✅ Usuarios sembrados con éxito usando Repository y bcrypt");
 };
