@@ -4,12 +4,12 @@ import { SECRET_KEY } from "../../config/env";
 import { jwtData } from "../../types/express";
 
 export interface CustomRequest extends Request {
-    token: string | JwtPayload;
+  token: string | JwtPayload;
 }
 
 export class AuthMiddleware {
 
-  
+
   private static validateToken(token: string): jwtData | null {
     try {
       const secret = SECRET_KEY as Secret;
@@ -24,16 +24,18 @@ export class AuthMiddleware {
 
   static handle(req: Request, res: Response, next: NextFunction): void {
     try {
-      const authHeader = req.headers.authorization;
-      const cookieToken = req.headers["cookie"]?.split("=")[1];
-      const token = authHeader || cookieToken;
+      const authHeader = req.headers.authorization?.replace("Bearer ", "");
+      const cookieToken = req.cookies?.token;
+      const token =  cookieToken || authHeader;
+
+    
 
       if (!token) {
         res.status(401).json({ error: "Token no proporcionado" });
         return;
       }
 
-      const decoded = this.validateToken(token);
+      const decoded = AuthMiddleware.validateToken(token);
 
       if (!decoded) {
         res.status(401).json({ message: "Access Denied" });
@@ -43,9 +45,7 @@ export class AuthMiddleware {
       req.user = decoded;
       next();
     } catch (error) {
-      res.status(500).json({
-        error: "Error interno en el middleware de autenticación",
-      });
+      res.status(500).json({ error: "Error interno en el middleware de autenticación" });
     }
   }
 }

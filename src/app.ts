@@ -2,6 +2,9 @@ import express, { Application, Request, Response } from 'express';
 import { errorHandler } from "./core/errors/errorHandler";
 import { PORT } from "./config/env";
 import { swaggerUi, swaggerSpec } from "./config/swagger";
+import cookieParser from "cookie-parser"; // en tu app.ts
+import morgan from 'morgan';
+
 
 
 //routas
@@ -11,7 +14,8 @@ import authRoutes from "./modules/auth/auth.routes";
 
 const app: Application = express();
 
-import morgan from 'morgan';
+
+app.use(cookieParser());
 app.use(morgan('dev'));
 
 app.use(express.json()); // Para recibir JSON en las peticiones

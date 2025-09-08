@@ -10,6 +10,6 @@ export interface jwtData extends JwtPayload {
 // Extensión del Request de Express
 declare module "express-serve-static-core" {
   interface Request {
-    user: jwtData; //  req.user existe
+    user?: jwtData; //  req.user existe
   }
 }

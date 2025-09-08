@@ -11,7 +11,6 @@ const startServer = async (): Promise<void> => {
        
         await connectDb();
         console.log('✅ Conectado a MongoDB Atlas');
-
       
         app.listen(app.get('port'), () => {
             console.log('🚀 Servidor ejecutándose en puerto', app.get('port'));

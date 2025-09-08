@@ -2,6 +2,8 @@ import { Router } from "express";
 import { UserController } from "./user.controller";
 import { AuthMiddleware } from "../../core/middleware/authMiddleware";
 
+import { authorizeRole } from "../../core/middleware/authorizeRole";
+
 const router = Router();
 const userController = new UserController();
 
@@ -216,7 +218,10 @@ router.get("/:id", (req, res, next) => userController.getUserById(req, res, next
 router.get("/email/:email", (req, res, next) => userController.getUserByEmail(req, res, next));
 
 // Obtener todos los usuarios
-router.get("/", (req, res, next) => userController.getAllUsers(req, res, next));
+router.get("/", 
+    AuthMiddleware.handle,
+    authorizeRole("Usuarios", ["READ"]),
+    (req, res, next) => userController.getAllUsers(req, res, next));
 
 // Contar usuarios
 router.get("/count/all", (req, res, next) => userController.countUsers(req, res, next));
@@ -225,6 +230,9 @@ router.get("/count/all", (req, res, next) => userController.countUsers(req, res,
 router.put("/:id", AuthMiddleware.handle, (req, res, next) => userController.updateUserById(req, res, next));
 
 // Eliminar usuario por ID (requiere autenticación)
-router.delete("/:id", AuthMiddleware.handle, (req, res, next) => userController.deleteUserById(req, res, next));
+router.delete("/:id", 
+    AuthMiddleware.handle,
+    authorizeRole("Usuarios", ["DELETE"]),
+     (req, res, next) => userController.deleteUserById(req, res, next));
 
 export default router;
