@@ -12,7 +12,10 @@ const swaggerOptions = {
     },
     apis: [
         "./src/modules/auth/auth.routes.ts",
-        "./src/modules/users/user.routes.ts"
+        "./src/modules/users/user.routes.ts",
+        "./src/modules/products/producto.routes.ts",
+        "./src/modules/categories/categoria.routes.ts",
+        "./src/modules/principioActivo/principioActivo.routes.ts",
     ]
 };
 
