@@ -8,7 +8,7 @@ const productoSchema = new Schema({
   concentracion: { type: Schema.Types.ObjectId, ref: "Concentracion", required: true },
   formaFarmaceutica: { type: Schema.Types.ObjectId, ref: "FormaFarmaceutica", required: true },
   subcategoria: { type: Schema.Types.ObjectId, ref: "Subcategoria", required: true },
-  laboratorio: { type: Schema.Types.ObjectId, ref: "Laboratorio", required: true },
+  laboratorio: { type: Schema.Types.ObjectId, ref: "Laboratorio", required: true }, // FALTA Laboratorio que fabrica el producto
   unidadMedida: { type: Schema.Types.ObjectId, ref: "UnidadMedida", required: true },
   codigoBarras: { type: String, unique: true },
   stockMinimo: { type: Number, default: 0 }
